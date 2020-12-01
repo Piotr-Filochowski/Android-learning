@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name = "smb_CW1"

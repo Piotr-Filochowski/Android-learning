@@ -6,9 +6,9 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.filochowski.smb_cw1.adapter.MyAdapter
-import com.filochowski.smb_cw1.viewmodel.StudentViewModel
+import com.filochowski.smb_cw1.viewmodel.ShoppingListItemViewModel
 import com.filochowski.smb_cw1.databinding.ActivitySecondaryBinding
-import com.filochowski.smb_cw1.entity.StudentEntity
+import com.filochowski.smb_cw1.entity.ShoppingListItem
 
 class SecondaryActivity : AppCompatActivity() {
 
@@ -22,7 +22,7 @@ class SecondaryActivity : AppCompatActivity() {
 
 
         val viewModel =
-            StudentViewModel(application)
+            ShoppingListItemViewModel(application)
         val adapter = MyAdapter(viewModel)
         viewModel.allStudens.observe(this, Observer {
             it.let {
@@ -40,10 +40,10 @@ class SecondaryActivity : AppCompatActivity() {
 
         binding.button2.setOnClickListener {
             viewModel.addStudent(
-                StudentEntity(
+                ShoppingListItem(
                     name = binding.etName.text.toString(),
-                    surname = binding.etSurname.text.toString(),
-                    graduated = binding.checkBox.isChecked
+                    quantity =  binding.etQuantity.text.toString().toFloat(),
+                    price = binding.etPrice.text.toString().toFloat()
                 )
             )
         }

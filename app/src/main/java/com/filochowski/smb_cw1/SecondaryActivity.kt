@@ -3,14 +3,13 @@ package com.filochowski.smb_cw1
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.filochowski.smb_cw1.databinding.ActivitySecondaryBinding
+import kotlinx.android.synthetic.main.activity_secondary.view.*
 
 class SecondaryActivity : AppCompatActivity() {
-
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,8 +20,13 @@ class SecondaryActivity : AppCompatActivity() {
         binding.textView2.text = intent.getCharSequenceExtra("textView1Text")
 
 
-
-        val elementList = arrayListOf("Element 1", "Element 2 ", "Element 3", "Element 4", "Element 5")
+        val viewModel = StudentViewModel(application)
+        val adapter = MyAdapter(viewModel)
+        viewModel.allStudens.observe(this, Observer {
+            it.let {
+                adapter.setListStudent(it)
+            }
+        })
 
 
 //      Layout manager
@@ -30,7 +34,22 @@ class SecondaryActivity : AppCompatActivity() {
         // Optional DividerItemDecoration
         binding.rv1.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         // Adaoter
-        binding.rv1.adapter = MyAdapter(elementList)
+        binding.rv1.adapter = adapter
+
+        binding.button2.setOnClickListener {
+            viewModel.addStudent(
+                StudentEntity(
+                    name = binding.etName.text.toString(),
+                    surname = binding.etSurname.text.toString(),
+                    graduated = binding.checkBox.isChecked
+                )
+            )
+        }
+
+        binding.button2.setOnLongClickListener{
+            viewModel.removeAll()
+            true
+        }
 
     }
 }

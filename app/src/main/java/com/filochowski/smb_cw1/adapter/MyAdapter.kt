@@ -1,9 +1,11 @@
-package com.filochowski.smb_cw1
+package com.filochowski.smb_cw1.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.filochowski.smb_cw1.viewmodel.StudentViewModel
 import com.filochowski.smb_cw1.databinding.ListElementBinding
+import com.filochowski.smb_cw1.entity.StudentEntity
 
 class MyAdapter(val viewModel: StudentViewModel) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 

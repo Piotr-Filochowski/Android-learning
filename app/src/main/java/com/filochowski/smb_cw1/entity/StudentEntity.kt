@@ -1,4 +1,4 @@
-package com.filochowski.smb_cw1
+package com.filochowski.smb_cw1.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

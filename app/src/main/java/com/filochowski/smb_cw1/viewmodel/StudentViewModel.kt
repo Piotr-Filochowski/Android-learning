@@ -1,8 +1,11 @@
-package com.filochowski.smb_cw1
+package com.filochowski.smb_cw1.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import com.filochowski.smb_cw1.db.StudentDb
+import com.filochowski.smb_cw1.entity.StudentEntity
+import com.filochowski.smb_cw1.repository.StudentRepository
 
 class StudentViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -10,7 +13,9 @@ class StudentViewModel(application: Application) : AndroidViewModel(application)
     val allStudens: LiveData<List<StudentEntity>>
 
     init {
-        repo = StudentRepository(StudentDb.getDatabase(application)!!.getStudentDao())
+        repo = StudentRepository(
+            StudentDb.getDatabase(application)!!.getStudentDao()
+        )
         allStudens = repo.getStudents()
     }
     

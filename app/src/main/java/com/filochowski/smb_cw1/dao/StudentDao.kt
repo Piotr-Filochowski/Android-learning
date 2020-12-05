@@ -1,7 +1,8 @@
-package com.filochowski.smb_cw1
+package com.filochowski.smb_cw1.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.filochowski.smb_cw1.entity.StudentEntity
 
 @Dao
 interface StudentDao {

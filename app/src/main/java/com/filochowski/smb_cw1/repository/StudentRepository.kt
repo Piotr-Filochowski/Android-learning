@@ -1,4 +1,7 @@
-package com.filochowski.smb_cw1
+package com.filochowski.smb_cw1.repository
+
+import com.filochowski.smb_cw1.dao.StudentDao
+import com.filochowski.smb_cw1.entity.StudentEntity
 
 class StudentRepository(val studentDao: StudentDao) {
 

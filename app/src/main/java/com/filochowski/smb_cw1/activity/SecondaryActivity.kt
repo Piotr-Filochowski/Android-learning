@@ -1,13 +1,14 @@
-package com.filochowski.smb_cw1
+package com.filochowski.smb_cw1.activity
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.filochowski.smb_cw1.adapter.MyAdapter
+import com.filochowski.smb_cw1.viewmodel.StudentViewModel
 import com.filochowski.smb_cw1.databinding.ActivitySecondaryBinding
-import kotlinx.android.synthetic.main.activity_secondary.view.*
+import com.filochowski.smb_cw1.entity.StudentEntity
 
 class SecondaryActivity : AppCompatActivity() {
 
@@ -20,7 +21,8 @@ class SecondaryActivity : AppCompatActivity() {
         binding.textView2.text = intent.getCharSequenceExtra("textView1Text")
 
 
-        val viewModel = StudentViewModel(application)
+        val viewModel =
+            StudentViewModel(application)
         val adapter = MyAdapter(viewModel)
         viewModel.allStudens.observe(this, Observer {
             it.let {

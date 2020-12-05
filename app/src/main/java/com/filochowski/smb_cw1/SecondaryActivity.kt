@@ -18,7 +18,8 @@ class SecondaryActivity : AppCompatActivity() {
             ActivitySecondaryBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val intent = intent
-        binding.textView2.text = intent.getCharSequenceExtra("textView1:text")
+        binding.textView2.text = intent.getCharSequenceExtra("textView1Text")
+
 
 
         val elementList = arrayListOf("Element 1", "Element 2 ", "Element 3", "Element 4", "Element 5")

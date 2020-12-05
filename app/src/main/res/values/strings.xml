@@ -2,4 +2,5 @@
     <string name="app_name">smb_CW1</string>
     <string name="wpisz_tekst">Wpisz tekst:</string>
     <string name="drugie_aktiwiti">Drugie aktiwiti</string>
+    <string name="nothing_was_saved_before">Nothing was saved before</string>
 </resources>

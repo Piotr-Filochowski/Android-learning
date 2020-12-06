@@ -6,21 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".activity.SecondaryActivity">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="34dp"
-        android:layout_marginEnd="121dp"
-        android:layout_marginBottom="54dp"
-        android:text="@string/drugie_aktiwiti"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/rv1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv1"
         android:layout_width="match_parent"

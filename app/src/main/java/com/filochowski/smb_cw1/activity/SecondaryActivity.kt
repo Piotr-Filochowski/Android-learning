@@ -26,7 +26,6 @@ class SecondaryActivity : AppCompatActivity() {
         val binding = ActivitySecondaryBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val intent = intent
-        binding.textView2.text = intent.getCharSequenceExtra("textView1Text")
 
         val viewModel = ShoppingListItemViewModel(application)
         viewModelGlobal = viewModel

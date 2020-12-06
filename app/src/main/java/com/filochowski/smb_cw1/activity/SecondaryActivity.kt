@@ -74,5 +74,13 @@ class SecondaryActivity : AppCompatActivity() {
                 }
             }).attachToRecyclerView(binding.rv1)
 
+        val onClickListener = object : MyAdapter.OnClickListener{
+            override fun onItemClick(item: ShoppingListItem?) {
+                binding.etName.setText("dupa")
+            }
+        }
+
+        adapter.setOnItemClickListener(onClickListener)
+
     }
 }

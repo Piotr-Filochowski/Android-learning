@@ -3,13 +3,16 @@ package com.filochowski.smb_cw1.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.filochowski.smb_cw1.viewmodel.ShoppingListItemViewModel
 import com.filochowski.smb_cw1.databinding.ListElementBinding
 import com.filochowski.smb_cw1.entity.ShoppingListItem
+import com.filochowski.smb_cw1.viewmodel.ShoppingListItemViewModel
 
 class MyAdapter(val viewModel: ShoppingListItemViewModel) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
     var studentList =  emptyList<ShoppingListItem>()
+
+    var listener: OnClickListener? = null
+
 
     class MyViewHolder(val binding: ListElementBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -26,7 +29,10 @@ class MyAdapter(val viewModel: ShoppingListItemViewModel) : RecyclerView.Adapter
         holder.binding.tvPrice.text = studentList[position].price.toString()
         holder.binding.cbAbsolwent.isChecked = studentList[position].bought
         holder.binding.root.setOnClickListener {
-            viewModel.deleteStudent(studentList[position])
+
+            if(listener != null && position != RecyclerView.NO_POSITION) {
+                listener!!.onItemClick(studentList[position])
+            }
         }
         holder.binding.cbAbsolwent.setOnClickListener {
             studentList[position].bought = holder.binding.cbAbsolwent.isChecked
@@ -46,4 +52,11 @@ class MyAdapter(val viewModel: ShoppingListItemViewModel) : RecyclerView.Adapter
         notifyDataSetChanged()
     }
 
+    interface OnClickListener {
+        fun onItemClick(item: ShoppingListItem?)
+    }
+
+    fun setOnItemClickListener(clickListener: OnClickListener) {
+        listener = clickListener
+    }
 }

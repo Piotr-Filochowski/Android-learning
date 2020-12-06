@@ -44,16 +44,21 @@ class SecondaryActivity : AppCompatActivity() {
         binding.rv1.adapter = adapter
 
         binding.button2.setOnClickListener {
-            viewModel.addShoppingItem(
-                ShoppingListItem(
-                    name = binding.etName.text.toString(),
-                    quantity = binding.etQuantity.text.toString().toFloat(),
-                    price = binding.etPrice.text.toString().toFloat()
+            if(binding.etName.text.isEmpty() || binding.etPrice.text.isEmpty() || binding.etQuantity.text.isEmpty()){
+                Toast.makeText(this, "Fill all fields first", Toast.LENGTH_SHORT).show()
+
+            } else {
+                viewModel.addShoppingItem(
+                    ShoppingListItem(
+                        name = binding.etName.text.toString(),
+                        quantity = binding.etQuantity.text.toString().toFloat(),
+                        price = binding.etPrice.text.toString().toFloat()
+                    )
                 )
-            )
-            binding.etName.setText("")
-            binding.etPrice.setText("")
-            binding.etQuantity.setText("")
+                binding.etName.setText("")
+                binding.etPrice.setText("")
+                binding.etQuantity.setText("")
+            }
         }
 
         binding.button2.setOnLongClickListener {

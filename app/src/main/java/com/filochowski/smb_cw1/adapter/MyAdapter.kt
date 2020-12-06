@@ -35,6 +35,10 @@ class MyAdapter(val viewModel: ShoppingListItemViewModel) : RecyclerView.Adapter
         }
     }
 
+    fun getShoppingListItemAt(position: Int): ShoppingListItem {
+        return studentList[position]
+    }
+
     override fun getItemCount(): Int = studentList.size
 
     fun setListStudent(list: List<ShoppingListItem>) {

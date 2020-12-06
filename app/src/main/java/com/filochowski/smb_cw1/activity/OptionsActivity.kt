@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
+import android.util.TypedValue
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.filochowski.smb_cw1.databinding.ActivityOptionsBinding
@@ -37,9 +38,13 @@ class OptionsActivity : AppCompatActivity() {
         }
         binding.optSize.setChecked(optSize)
         if(optSize){
-
+            binding.button.setTextSize(TypedValue.COMPLEX_UNIT_SP,28.0f)
+            binding.optColorChange.setTextSize(TypedValue.COMPLEX_UNIT_SP,28.0f)
+            binding.optSize.setTextSize(TypedValue.COMPLEX_UNIT_SP,28.0f)
         } else {
-
+            binding.button.setTextSize(TypedValue.COMPLEX_UNIT_SP,14.0f)
+            binding.optColorChange.setTextSize(TypedValue.COMPLEX_UNIT_SP,14.0f)
+            binding.optSize.setTextSize(TypedValue.COMPLEX_UNIT_SP,14.0f)
         }
         binding.optColorChange.setOnCheckedChangeListener { _ , isChecked ->
             val message = if (isChecked) "Blue" else "Red"
@@ -51,6 +56,19 @@ class OptionsActivity : AppCompatActivity() {
                 binding.button.setBackgroundColor(Color.RED)
                 binding.optColorChange.setTextColor(Color.RED)
                 binding.optSize.setTextColor(Color.RED)
+            }
+        }
+
+        binding.optSize.setOnCheckedChangeListener { _ , isChecked ->
+            val message = if (isChecked) "Blue" else "Red"
+            if (isChecked) {
+                binding.button.setTextSize(TypedValue.COMPLEX_UNIT_SP,28.0f)
+                binding.optColorChange.setTextSize(TypedValue.COMPLEX_UNIT_SP,28.0f)
+                binding.optSize.setTextSize(TypedValue.COMPLEX_UNIT_SP,28.0f)
+            } else {
+                binding.button.setTextSize(TypedValue.COMPLEX_UNIT_SP,14.0f)
+                binding.optColorChange.setTextSize(TypedValue.COMPLEX_UNIT_SP,14.0f)
+                binding.optSize.setTextSize(TypedValue.COMPLEX_UNIT_SP,14.0f)
             }
         }
 

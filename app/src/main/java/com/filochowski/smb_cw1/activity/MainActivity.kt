@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
+import android.util.TypedValue
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.filochowski.smb_cw1.R
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
 
         var color = sharedPreferences.getBoolean("color", true)
+        var size = sharedPreferences.getBoolean("size", true)
         if(color){
             binding.buttonOptions.setBackgroundColor(Color.BLUE)
             binding.buttonNext .setBackgroundColor(Color.BLUE)
@@ -51,6 +53,16 @@ class MainActivity : AppCompatActivity() {
             binding.buttonNext.setBackgroundColor(Color.RED)
             isColorOn = color
         }
+
+        if(size){
+            binding.buttonOptions.setTextSize(TypedValue.COMPLEX_UNIT_SP,28.0f)
+            binding.buttonNext .setTextSize(TypedValue.COMPLEX_UNIT_SP,28.0f)
+            isBigSize = size
+        } else {
+            binding.buttonOptions.setTextSize(TypedValue.COMPLEX_UNIT_SP,14.0f)
+            binding.buttonNext .setTextSize(TypedValue.COMPLEX_UNIT_SP,14.0f)
+            isBigSize = size
+        }
     }
 
 
@@ -58,6 +70,7 @@ class MainActivity : AppCompatActivity() {
         super.onStop()
         val editor = sharedPreferences.edit()
         editor.putBoolean("color", isColorOn)
+        editor.putBoolean("size", isBigSize)
         editor.apply()
     }
 
@@ -77,9 +90,21 @@ class MainActivity : AppCompatActivity() {
                 binding.buttonNext.setBackgroundColor(Color.RED)
                 isColorOn = color
             }
+
+            if(size){
+                binding.buttonOptions.setTextSize(TypedValue.COMPLEX_UNIT_SP,28.0f)
+                binding.buttonNext .setTextSize(TypedValue.COMPLEX_UNIT_SP,28.0f)
+                isBigSize = size
+            } else {
+                binding.buttonOptions.setTextSize(TypedValue.COMPLEX_UNIT_SP,14.0f)
+                binding.buttonNext .setTextSize(TypedValue.COMPLEX_UNIT_SP,14.0f)
+                isBigSize = size
+            }
+
         }
         val editor = sharedPreferences.edit()
         editor.putBoolean("color", isColorOn)
+        editor.putBoolean("size", isBigSize)
         editor.apply()
     }
 }

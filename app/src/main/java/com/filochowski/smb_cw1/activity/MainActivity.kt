@@ -23,61 +23,32 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-
-
         sharedPreferences = getPreferences(Context.MODE_PRIVATE)
-
         setContentView(binding.root)
-
         binding.buttonOptions.setOnClickListener {
             val intentOptions = Intent(this, OptionsActivity::class.java)
             intentOptions.putExtra("opt_color", isColorOn)
             intentOptions.putExtra("opt_size", isBigSize)
             startActivityForResult(intentOptions, 3)
         }
-
         binding.buttonNext.setOnClickListener {
             val intent1 = Intent(this, SecondaryActivity::class.java)
-            intent1.putExtra("textView1Text", binding.editText1.text)
             startActivity(intent1)
-        }
-
-
-
-        binding.changeColour.setOnCheckedChangeListener { _ , isChecked ->
-            val message = if (isChecked) "Blue" else "Red"
-            if (isChecked) {
-                binding.buttonOptions.setBackgroundColor(Color.BLUE)
-                binding.buttonNext .setBackgroundColor(Color.BLUE)
-                binding.changeColour.setTextColor(Color.BLUE)
-            } else {
-                binding.buttonOptions.setBackgroundColor(Color.RED)
-                binding.buttonNext.setBackgroundColor(Color.RED)
-                binding.changeColour.setTextColor(Color.RED)
-            }
-
-
-            Toast.makeText(this@MainActivity, message,
-                Toast.LENGTH_SHORT).show()
         }
 
     }
 
     override fun onStart() {
         super.onStart()
-        binding.someText.text = sharedPreferences.getString("tv_text", getString(R.string.nothing_was_saved_before))
+
         var color = sharedPreferences.getBoolean("color", true)
         if(color){
             binding.buttonOptions.setBackgroundColor(Color.BLUE)
             binding.buttonNext .setBackgroundColor(Color.BLUE)
-            binding.changeColour.setTextColor(Color.BLUE)
-            binding.changeColour.setChecked(color)
             isColorOn = color
         } else {
             binding.buttonOptions.setBackgroundColor(Color.RED)
             binding.buttonNext.setBackgroundColor(Color.RED)
-            binding.changeColour.setTextColor(Color.RED)
-            binding.changeColour.setChecked(color)
             isColorOn = color
         }
     }
@@ -86,8 +57,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         val editor = sharedPreferences.edit()
-        editor.putString("tv_text", binding.someText.text.toString())
-        editor.putBoolean("color", binding.changeColour.isChecked)
+        editor.putBoolean("color", isColorOn)
         editor.apply()
     }
 
@@ -101,19 +71,15 @@ class MainActivity : AppCompatActivity() {
             if(color){
                 binding.buttonOptions.setBackgroundColor(Color.BLUE)
                 binding.buttonNext .setBackgroundColor(Color.BLUE)
-                binding.changeColour.setTextColor(Color.BLUE)
-                binding.changeColour.setChecked(color)
                 isColorOn = color
             } else {
                 binding.buttonOptions.setBackgroundColor(Color.RED)
                 binding.buttonNext.setBackgroundColor(Color.RED)
-                binding.changeColour.setTextColor(Color.RED)
-                binding.changeColour.setChecked(color)
                 isColorOn = color
             }
         }
         val editor = sharedPreferences.edit()
-        editor.putBoolean("color", binding.changeColour.isChecked)
+        editor.putBoolean("color", isColorOn)
         editor.apply()
     }
 }

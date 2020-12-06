@@ -17,7 +17,7 @@ class EditShoppingListItem : AppCompatActivity() {
         binding = ActivityEditShoppingListItemBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var id = intent.getCharSequenceExtra("gotToEditText_id")
+        var id = intent.getLongExtra("gotToEditText_id", 0)
 
         binding.etNameUpd.setText(intent.getCharSequenceExtra("gotToEditText_name"))
         binding.etPriceUpd.setText(intent.getFloatExtra("gotToEditText_price", 0.0f).toString())

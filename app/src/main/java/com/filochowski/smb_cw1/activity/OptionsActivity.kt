@@ -5,11 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.filochowski.smb_cw1.databinding.ActivityOptionsBinding
-import com.filochowski.smb_cw1.entity.ShoppingListItem
 
 class OptionsActivity : AppCompatActivity() {
 
@@ -27,25 +26,34 @@ class OptionsActivity : AppCompatActivity() {
         var optSize = intent.getBooleanExtra("opt_size", false)
 
         binding.optColorChange.setChecked(optColor)
+        if(optColor){
+            binding.button.setBackgroundColor(Color.BLUE)
+            binding.optColorChange.setTextColor(Color.BLUE)
+            binding.optSize.setTextColor(Color.BLUE)
+        } else {
+            binding.button.setBackgroundColor(Color.RED)
+            binding.optColorChange.setTextColor(Color.RED)
+            binding.optSize.setTextColor(Color.RED)
+        }
         binding.optSize.setChecked(optSize)
+        if(optSize){
 
-        binding.optColorChange
-//            .setOnCheckedChangeListener { _ , isChecked ->
-//            val message = if (isChecked) "Blue" else "Red"
-//            val editor = sharedPreferences.edit()
-//            editor.putBoolean("color", isChecked)
-//            Toast.makeText(this@OptionsActivity, message,
-//                Toast.LENGTH_SHORT).show()
-//        }
+        } else {
 
-        binding.optSize
-//            .setOnCheckedChangeListener { _ , isChecked ->
-//            val message = if (isChecked) "Small" else "Big"
-//            val editor = sharedPreferences.edit()
-//            editor.putBoolean("size", isChecked)
-//            Toast.makeText(this@OptionsActivity, message,
-//                Toast.LENGTH_SHORT).show()
-//        }
+        }
+        binding.optColorChange.setOnCheckedChangeListener { _ , isChecked ->
+            val message = if (isChecked) "Blue" else "Red"
+            if (isChecked) {
+                binding.button.setBackgroundColor(Color.BLUE)
+                binding.optColorChange.setTextColor(Color.BLUE)
+                binding.optSize.setTextColor(Color.BLUE)
+            } else {
+                binding.button.setBackgroundColor(Color.RED)
+                binding.optColorChange.setTextColor(Color.RED)
+                binding.optSize.setTextColor(Color.RED)
+            }
+        }
+
 
         binding.button.setOnClickListener {
             var intentData = Intent()

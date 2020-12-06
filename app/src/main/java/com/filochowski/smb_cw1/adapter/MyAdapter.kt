@@ -33,7 +33,7 @@ class MyAdapter(val viewModel: ShoppingListItemViewModel) : RecyclerView.Adapter
         }
         holder.binding.cbAbsolwent.setOnClickListener {
             studentList[position].bought = holder.binding.cbAbsolwent.isChecked
-            viewModel.updateStudent(studentList[position])
+            viewModel.updateShoppingListItem(studentList[position])
             notifyDataSetChanged()
         }
     }

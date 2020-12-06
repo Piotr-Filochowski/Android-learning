@@ -31,7 +31,7 @@ class SecondaryActivity : AppCompatActivity() {
         val viewModel = ShoppingListItemViewModel(application)
         viewModelGlobal = viewModel
         val adapter = MyAdapter(viewModel)
-        viewModel.allStudens.observe(this, Observer {
+        viewModel.allItems.observe(this, Observer {
             it.let {
                 adapter.setListStudent(it)
             }
@@ -45,7 +45,7 @@ class SecondaryActivity : AppCompatActivity() {
         binding.rv1.adapter = adapter
 
         binding.button2.setOnClickListener {
-            viewModel.addStudent(
+            viewModel.addShoppingItem(
                 ShoppingListItem(
                     name = binding.etName.text.toString(),
                     quantity = binding.etQuantity.text.toString().toFloat(),
@@ -74,7 +74,7 @@ class SecondaryActivity : AppCompatActivity() {
                 }
 
                 override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
-                    viewModel.deleteStudent(adapter.getShoppingListItemAt(viewHolder.adapterPosition))
+                    viewModel.deleteShoppingListItem(adapter.getShoppingListItemAt(viewHolder.adapterPosition))
                     Toast.makeText(context, "Deleted item", Toast.LENGTH_SHORT).show()
                 }
             }).attachToRecyclerView(binding.rv1)
@@ -106,7 +106,7 @@ class SecondaryActivity : AppCompatActivity() {
             var quantity = data!!.getFloatExtra("gotToEditText_quantity", 0.0f)
             var bought = data!!.getBooleanExtra("gotToEditText_bought", false)
             var shoppingListItem = ShoppingListItem(id, name,  quantity, price, bought)
-            viewModelGlobal.updateStudent(shoppingListItem)
+            viewModelGlobal.updateShoppingListItem(shoppingListItem)
 
         }
     }

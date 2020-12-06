@@ -8,22 +8,22 @@ import com.filochowski.smb_cw1.db.ShoppingListItemDb
 class ShoppingListItemViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repo: com.filochowski.smb_cw1.repository.ShoppingListItemRepository
-    val allStudens: LiveData<List<com.filochowski.smb_cw1.entity.ShoppingListItem>>
+    val allItems: LiveData<List<com.filochowski.smb_cw1.entity.ShoppingListItem>>
 
     init {
         repo = com.filochowski.smb_cw1.repository.ShoppingListItemRepository(
             ShoppingListItemDb.getDatabase(application)!!.getStudentDao()
         )
-        allStudens = repo.getStudents()
+        allItems = repo.getShoppingItems()
     }
     
-    fun getStudents() = repo.getStudents()
+    fun getShoppingItems() = repo.getShoppingItems()
 
-    fun addStudent(shoppingListItem: com.filochowski.smb_cw1.entity.ShoppingListItem) = repo.addStudent(shoppingListItem)
+    fun addShoppingItem(shoppingListItem: com.filochowski.smb_cw1.entity.ShoppingListItem) = repo.addShoppingItem(shoppingListItem)
 
-    fun updateStudent(shoppingListItem: com.filochowski.smb_cw1.entity.ShoppingListItem) = repo.updateStudent(shoppingListItem)
+    fun updateShoppingListItem(shoppingListItem: com.filochowski.smb_cw1.entity.ShoppingListItem) = repo.updateShoppingListItem(shoppingListItem)
 
-    fun deleteStudent(shoppingListItem: com.filochowski.smb_cw1.entity.ShoppingListItem) = repo.deleteStudent(shoppingListItem)
+    fun deleteShoppingListItem(shoppingListItem: com.filochowski.smb_cw1.entity.ShoppingListItem) = repo.deleteShoppingListItem(shoppingListItem)
 
     fun removeAll() = repo.removeAll()
 }

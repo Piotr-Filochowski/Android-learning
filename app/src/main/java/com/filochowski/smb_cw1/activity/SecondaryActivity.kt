@@ -51,6 +51,9 @@ class SecondaryActivity : AppCompatActivity() {
                     price = binding.etPrice.text.toString().toFloat()
                 )
             )
+            binding.etName.setText("")
+            binding.etPrice.setText("")
+            binding.etQuantity.setText("")
         }
 
         binding.button2.setOnLongClickListener {

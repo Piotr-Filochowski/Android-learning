@@ -1,5 +1,7 @@
 package com.filochowski.smb_cw1.activity
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +19,8 @@ import com.filochowski.smb_cw1.viewmodel.ShoppingListItemViewModel
 
 class SecondaryActivity : AppCompatActivity() {
 
+    private lateinit var viewModelGlobal: ShoppingListItemViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivitySecondaryBinding.inflate(layoutInflater)
@@ -25,6 +29,7 @@ class SecondaryActivity : AppCompatActivity() {
         binding.textView2.text = intent.getCharSequenceExtra("textView1Text")
 
         val viewModel = ShoppingListItemViewModel(application)
+        viewModelGlobal = viewModel
         val adapter = MyAdapter(viewModel)
         viewModel.allStudens.observe(this, Observer {
             it.let {
@@ -76,11 +81,33 @@ class SecondaryActivity : AppCompatActivity() {
 
         val onClickListener = object : MyAdapter.OnClickListener{
             override fun onItemClick(item: ShoppingListItem?) {
-                binding.etName.setText("dupa")
+                var intent = Intent(context, EditShoppingListItem::class.java)
+                intent.putExtra("gotToEditText_id", item!!.id)
+                intent.putExtra("gotToEditText_name", item.name)
+                intent.putExtra("gotToEditText_price", item.price)
+                intent.putExtra("gotToEditText_quantity", item.quantity)
+                intent.putExtra("gotToEditText_bought", item.bought)
+                startActivityForResult(intent, 1)
             }
         }
 
         adapter.setOnItemClickListener(onClickListener)
 
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            var id = data!!.getLongExtra("gotToEditText_id", 0)
+            var name = data!!.getCharSequenceExtra("gotToEditText_name").toString()
+            var price = data!!.getFloatExtra("gotToEditText_price", 0.0f)
+            var quantity = data!!.getFloatExtra("gotToEditText_quantity", 0.0f)
+            var bought = data!!.getBooleanExtra("gotToEditText_bought", false)
+            var shoppingListItem = ShoppingListItem(id, name,  quantity, price, bought)
+            viewModelGlobal.updateStudent(shoppingListItem)
+
+        }
     }
 }

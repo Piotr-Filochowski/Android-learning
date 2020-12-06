@@ -10,10 +10,7 @@ import com.filochowski.smb_cw1.viewmodel.ShoppingListItemViewModel
 class MyAdapter(val viewModel: ShoppingListItemViewModel) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
     var studentList =  emptyList<ShoppingListItem>()
-
     var listener: OnClickListener? = null
-
-
     class MyViewHolder(val binding: ListElementBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {

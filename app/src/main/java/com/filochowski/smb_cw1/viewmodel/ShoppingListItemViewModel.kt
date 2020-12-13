@@ -12,7 +12,7 @@ class ShoppingListItemViewModel(application: Application) : AndroidViewModel(app
 
     init {
         repo = com.filochowski.smb_cw1.repository.ShoppingListItemRepository(
-            ShoppingListItemDb.getDatabase(application)!!.getStudentDao()
+            ShoppingListItemDb.getDatabase(application)!!.getShoppingListItemDao()
         )
         allItems = repo.getShoppingItems()
     }

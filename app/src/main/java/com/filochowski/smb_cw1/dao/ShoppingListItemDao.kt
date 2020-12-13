@@ -8,16 +8,16 @@ import com.filochowski.smb_cw1.entity.ShoppingListItem
 interface ShoppingListItemDao {
 
     @Query("SELECT * FROM ShoppingListItem")
-    fun getStudents(): LiveData<List<ShoppingListItem>>
+    fun getAllShoppingListItems(): LiveData<List<ShoppingListItem>>
 
     @Insert
-    fun addStudent(shoppingListItem: ShoppingListItem)
+    fun addShoppingListItem(shoppingListItem: ShoppingListItem)
 
     @Update
-    fun updateStudent(shoppingListItem: ShoppingListItem)
+    fun updateShoppingListItem(shoppingListItem: ShoppingListItem)
 
     @Delete
-    fun deleteStudent(shoppingListItem: ShoppingListItem)
+    fun deleteShoppingListItem(shoppingListItem: ShoppingListItem)
 
     @Query("DELETE FROM ShoppingListItem")
     fun deleteAll()

@@ -5,13 +5,13 @@ import com.filochowski.smb_cw1.entity.ShoppingListItem
 
 class ShoppingListItemRepository(val shoppingListItemDao: ShoppingListItemDao) {
 
-    fun getShoppingItems() = shoppingListItemDao.getStudents()
+    fun getShoppingItems() = shoppingListItemDao.getAllShoppingListItems()
 
-    fun addShoppingItem(shoppingListItem: ShoppingListItem) = shoppingListItemDao.addStudent(shoppingListItem)
+    fun addShoppingItem(shoppingListItem: ShoppingListItem) = shoppingListItemDao.addShoppingListItem(shoppingListItem)
 
-    fun updateShoppingListItem(shoppingListItem: ShoppingListItem) = shoppingListItemDao.updateStudent(shoppingListItem)
+    fun updateShoppingListItem(shoppingListItem: ShoppingListItem) = shoppingListItemDao.updateShoppingListItem(shoppingListItem)
 
-    fun deleteShoppingListItem(shoppingListItem: ShoppingListItem) = shoppingListItemDao.deleteStudent(shoppingListItem)
+    fun deleteShoppingListItem(shoppingListItem: ShoppingListItem) = shoppingListItemDao.deleteShoppingListItem(shoppingListItem)
 
     fun removeAll() = shoppingListItemDao.deleteAll()
 }

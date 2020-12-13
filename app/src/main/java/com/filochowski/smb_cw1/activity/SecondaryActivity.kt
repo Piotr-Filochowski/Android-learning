@@ -32,7 +32,7 @@ class SecondaryActivity : AppCompatActivity() {
         val adapter = MyAdapter(viewModel)
         viewModel.allItems.observe(this, Observer {
             it.let {
-                adapter.setListStudent(it)
+                adapter.setListOfShoppingListItems(it)
             }
         })
 

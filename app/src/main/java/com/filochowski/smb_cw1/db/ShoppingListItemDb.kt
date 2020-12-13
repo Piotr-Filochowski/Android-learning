@@ -10,7 +10,7 @@ import com.filochowski.smb_cw1.entity.ShoppingListItem
 @Database(entities = [ShoppingListItem::class], version = 1)
 abstract class ShoppingListItemDb : RoomDatabase() {
 
-    abstract fun getStudentDao(): ShoppingListItemDao
+    abstract fun getShoppingListItemDao(): ShoppingListItemDao
 
     companion object {
         private var instance: ShoppingListItemDb? = null
@@ -21,7 +21,7 @@ abstract class ShoppingListItemDb : RoomDatabase() {
             instance = Room.databaseBuilder(
                 context,
                 ShoppingListItemDb::class.java,
-                "studentDb"
+                "shoppingListItemsDb"
             ).allowMainThreadQueries().build()
             return instance
         }

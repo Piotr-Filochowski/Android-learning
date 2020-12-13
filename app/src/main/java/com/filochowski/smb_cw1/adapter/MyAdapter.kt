@@ -9,7 +9,7 @@ import com.filochowski.smb_cw1.viewmodel.ShoppingListItemViewModel
 
 class MyAdapter(val viewModel: ShoppingListItemViewModel) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
-    var studentList =  emptyList<ShoppingListItem>()
+    var sliList =  emptyList<ShoppingListItem>()
     var listener: OnClickListener? = null
     class MyViewHolder(val binding: ListElementBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -20,32 +20,32 @@ class MyAdapter(val viewModel: ShoppingListItemViewModel) : RecyclerView.Adapter
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.binding.tvId.text = studentList[position].id.toString()
-        holder.binding.tvName.text = studentList[position].name
-        holder.binding.tvQuantity.text = studentList[position].quantity.toString()
-        holder.binding.tvPrice.text = studentList[position].price.toString()
-        holder.binding.cbAbsolwent.isChecked = studentList[position].bought
+        holder.binding.tvId.text = sliList[position].id.toString()
+        holder.binding.tvName.text = sliList[position].name
+        holder.binding.tvQuantity.text = sliList[position].quantity.toString()
+        holder.binding.tvPrice.text = sliList[position].price.toString()
+        holder.binding.cbAbsolwent.isChecked = sliList[position].bought
         holder.binding.root.setOnClickListener {
 
             if(listener != null && position != RecyclerView.NO_POSITION) {
-                listener!!.onItemClick(studentList[position])
+                listener!!.onItemClick(sliList[position])
             }
         }
         holder.binding.cbAbsolwent.setOnClickListener {
-            studentList[position].bought = holder.binding.cbAbsolwent.isChecked
-            viewModel.updateShoppingListItem(studentList[position])
+            sliList[position].bought = holder.binding.cbAbsolwent.isChecked
+            viewModel.updateShoppingListItem(sliList[position])
             notifyDataSetChanged()
         }
     }
 
     fun getShoppingListItemAt(position: Int): ShoppingListItem {
-        return studentList[position]
+        return sliList[position]
     }
 
-    override fun getItemCount(): Int = studentList.size
+    override fun getItemCount(): Int = sliList.size
 
-    fun setListStudent(list: List<ShoppingListItem>) {
-        studentList = list
+    fun setListOfShoppingListItems(list: List<ShoppingListItem>) {
+        sliList = list
         notifyDataSetChanged()
     }
 

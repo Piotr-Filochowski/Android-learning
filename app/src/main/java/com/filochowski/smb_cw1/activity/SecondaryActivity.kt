@@ -68,7 +68,7 @@ class SecondaryActivity : AppCompatActivity() {
                 broadcast.putExtra("productNumber", binding.etQuantity.text.toString())
                 broadcast.putExtra("productIsBought", myFalse.toString())
 
-                sendBroadcast(broadcast, "com.filochowski.receiverapp.MY_PERMISSION")
+                sendBroadcast(broadcast, "com.filochowski.smb_cw1.MY_PERMISSION")
 
 
 

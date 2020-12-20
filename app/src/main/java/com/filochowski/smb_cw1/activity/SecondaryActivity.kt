@@ -1,6 +1,7 @@
 package com.filochowski.smb_cw1.activity
 
 import android.app.Activity
+import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.filochowski.smb_cw1.R
 import com.filochowski.smb_cw1.adapter.MyAdapter
 import com.filochowski.smb_cw1.databinding.ActivitySecondaryBinding
 import com.filochowski.smb_cw1.entity.ShoppingListItem
@@ -43,18 +45,35 @@ class SecondaryActivity : AppCompatActivity() {
         // Adaoter
         binding.rv1.adapter = adapter
 
+        var myFalse = false
+
         binding.button2.setOnClickListener {
             if(binding.etName.text.isEmpty() || binding.etPrice.text.isEmpty() || binding.etQuantity.text.isEmpty()){
                 Toast.makeText(this, "Fill all fields first", Toast.LENGTH_SHORT).show()
 
             } else {
-                viewModel.addShoppingItem(
+                var id = viewModel.addShoppingItem(
                     ShoppingListItem(
                         name = binding.etName.text.toString(),
                         quantity = binding.etQuantity.text.toString().toFloat(),
                         price = binding.etPrice.text.toString().toFloat()
                     )
                 )
+                //sending broadcast with newly added product information
+                val broadcast = Intent(getString(R.string.addProduct))
+                broadcast.component = ComponentName("com.filochowski.receiverapp", "com.filochowski.receiverapp.MyReceiver")
+                broadcast.putExtra("name", binding.etName.text.toString())
+                broadcast.putExtra("productId", id.toString())
+                broadcast.putExtra("productPrice", binding.etPrice.text.toString())
+                broadcast.putExtra("productNumber", binding.etQuantity.text.toString())
+                broadcast.putExtra("productIsBought", myFalse.toString())
+
+                sendBroadcast(broadcast, "com.filochowski.receiverapp.MY_PERMISSION")
+
+
+
+
+
                 binding.etName.setText("")
                 binding.etPrice.setText("")
                 binding.etQuantity.setText("")

@@ -11,7 +11,7 @@ interface ShoppingListItemDao {
     fun getAllShoppingListItems(): LiveData<List<ShoppingListItem>>
 
     @Insert
-    fun addShoppingListItem(shoppingListItem: ShoppingListItem)
+    fun addShoppingListItem(shoppingListItem: ShoppingListItem): Long
 
     @Update
     fun updateShoppingListItem(shoppingListItem: ShoppingListItem)

@@ -16,4 +16,5 @@
     <string name="price2">Price</string>
     <string name="add">Add</string>
     <string name="textview">null</string>
+    <string name="addProduct">addProduct</string>
 </resources>

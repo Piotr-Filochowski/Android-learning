@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         sharedPreferences = getPreferences(Context.MODE_PRIVATE)
         setContentView(binding.root)
+        binding.tVLogged.text = "Logged as: " + intent.getStringExtra("user")
         binding.buttonOptions.setOnClickListener {
             val intentOptions = Intent(this, OptionsActivity::class.java)
             intentOptions.putExtra("opt_color", isColorOn)

@@ -17,4 +17,7 @@
     <string name="add">Add</string>
     <string name="textview">null</string>
     <string name="addProduct">addProduct</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="login_register">Login / Register</string>
 </resources>

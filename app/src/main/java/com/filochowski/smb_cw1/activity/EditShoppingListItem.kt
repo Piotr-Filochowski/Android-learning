@@ -29,15 +29,6 @@ class EditShoppingListItem : AppCompatActivity() {
             updateItem()
             Toast.makeText(this, "Updated item", Toast.LENGTH_LONG).show()
         }
-
-        //        information passed from broadcast receiver after clicking notification
-        var broadcastProductId = intent.getStringExtra("productid")             //  gotToEditText_id  only in updateItem fun
-        var broadcastProductName = intent.getStringExtra("productname")         //  gotToEditText_name
-        var broadcastProductPrice = intent.getStringExtra("productprice")       //  gotToEditText_price
-        var broadcastProductNumber = intent.getStringExtra("productnumber")     //  gotToEditText_quantity
-        var broadcastProductIsBought = intent.getStringExtra("productisbought") //  gotToEditText_bought  only in updateItem fun
-
-
     }
 
 

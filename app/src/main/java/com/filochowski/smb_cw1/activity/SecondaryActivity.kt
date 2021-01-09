@@ -37,6 +37,9 @@ class SecondaryActivity : AppCompatActivity() {
         viewModelGlobal = viewModel
         database = FirebaseDatabase.getInstance().getReference("ShoppingListItem")
         val adapter = MyAdapter(viewModel)
+
+
+
         viewModel.allItems.observe(this, Observer {
             it.let {
                 adapter.setListOfShoppingListItems(it)
@@ -50,40 +53,34 @@ class SecondaryActivity : AppCompatActivity() {
         // Adaoter
         binding.rv1.adapter = adapter
 
-        var myFalse = false
+        setUpSaveButton(binding, viewModel)
+        setUpDeleteOnSwipe(viewModel, adapter, binding)
+        setUpAdapter(adapter)
 
-        binding.button2.setOnClickListener {
-            if(binding.etName.text.isEmpty() || binding.etPrice.text.isEmpty() || binding.etQuantity.text.isEmpty()){
-                Toast.makeText(this, "Fill all fields first", Toast.LENGTH_SHORT).show()
-            } else {
-                var item = ShoppingListItem(
-                    name = binding.etName.text.toString(),
-                    quantity = binding.etQuantity.text.toString().toFloat(),
-                    price = binding.etPrice.text.toString().toFloat()
-                )
-                var id = viewModel.addShoppingItem(item)
-                var idFirebase = database.push().key
-                if(idFirebase != null){
-                    var fDto = ShoppingListItemFirebaseDto(
-                        idFirebase,
-                        id,
-                        binding.etName.text.toString(),
-                        binding.etQuantity.text.toString().toFloat(),
-                        binding.etPrice.text.toString().toFloat()
-                    )
-                    database.child(idFirebase).setValue(fDto)
-                }
-                binding.etName.setText("")
-                binding.etPrice.setText("")
-                binding.etQuantity.setText("")
+    }
+
+    private fun setUpAdapter(adapter: MyAdapter) {
+        val context = this
+        val onClickListener = object : MyAdapter.OnClickListener {
+            override fun onItemClick(item: ShoppingListItem?) {
+                var intent = Intent(context, EditShoppingListItem::class.java)
+                intent.putExtra("gotToEditText_id", item!!.id)
+                intent.putExtra("gotToEditText_name", item.name)
+                intent.putExtra("gotToEditText_price", item.price)
+                intent.putExtra("gotToEditText_quantity", item.quantity)
+                intent.putExtra("gotToEditText_bought", item.bought)
+                startActivityForResult(intent, 1)
             }
         }
 
-        binding.button2.setOnLongClickListener {
-            viewModel.removeAll()
-            true
-        }
+        adapter.setOnItemClickListener(onClickListener)
+    }
 
+    private fun setUpDeleteOnSwipe(
+        viewModel: ShoppingListItemViewModel,
+        adapter: MyAdapter,
+        binding: ActivitySecondaryBinding
+    ) {
         val context = this
 
         val mIth = ItemTouchHelper(
@@ -103,25 +100,50 @@ class SecondaryActivity : AppCompatActivity() {
                     Toast.makeText(context, "Deleted item", Toast.LENGTH_SHORT).show()
                 }
             }).attachToRecyclerView(binding.rv1)
+    }
 
-        val onClickListener = object : MyAdapter.OnClickListener{
-            override fun onItemClick(item: ShoppingListItem?) {
-                var intent = Intent(context, EditShoppingListItem::class.java)
-                intent.putExtra("gotToEditText_id", item!!.id)
-                intent.putExtra("gotToEditText_name", item.name)
-                intent.putExtra("gotToEditText_price", item.price)
-                intent.putExtra("gotToEditText_quantity", item.quantity)
-                intent.putExtra("gotToEditText_bought", item.bought)
-                startActivityForResult(intent, 1)
+    private fun setUpSaveButton(
+        binding: ActivitySecondaryBinding,
+        viewModel: ShoppingListItemViewModel
+    ) {
+        binding.button2.setOnClickListener {
+            if (binding.etName.text.isEmpty() || binding.etPrice.text.isEmpty() || binding.etQuantity.text.isEmpty()) {
+                Toast.makeText(this, "Fill all fields first", Toast.LENGTH_SHORT).show()
+            } else {
+                var item = ShoppingListItem(
+                    name = binding.etName.text.toString(),
+                    quantity = binding.etQuantity.text.toString().toFloat(),
+                    price = binding.etPrice.text.toString().toFloat()
+                )
+                var id = viewModel.addShoppingItem(item)
+                var idFirebase = database.push().key
+                if (idFirebase != null) {
+                    var fDto = ShoppingListItemFirebaseDto(
+                        idFirebase,
+                        id,
+                        binding.etName.text.toString(),
+                        binding.etQuantity.text.toString().toFloat(),
+                        binding.etPrice.text.toString().toFloat()
+                    )
+                    database.child(idFirebase).setValue(fDto)
+                }
+                binding.etName.setText("")
+                binding.etPrice.setText("")
+                binding.etQuantity.setText("")
             }
         }
 
-        adapter.setOnItemClickListener(onClickListener)
-
+        binding.button2.setOnLongClickListener {
+            viewModel.removeAll()
+            true
+        }
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if(requestCode == 1 && resultCode == Activity.RESULT_OK) {

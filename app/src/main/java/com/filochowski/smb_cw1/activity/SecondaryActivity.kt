@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.filochowski.smb_cw1.adapter.MyAdapter
 import com.filochowski.smb_cw1.databinding.ActivitySecondaryBinding
 import com.filochowski.smb_cw1.dto.ShoppingListItemFirebaseDto
-import com.filochowski.smb_cw1.entity.ShoppingListItem
+import com.filochowski.smb_cw1.viewmodel.NewViewModel
 import com.filochowski.smb_cw1.viewmodel.ShoppingListItemViewModel
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase
 
 class SecondaryActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: ShoppingListItemViewModel
+    private lateinit var viewModel: NewViewModel
     private lateinit var database: DatabaseReference
 
 
@@ -31,13 +31,18 @@ class SecondaryActivity : AppCompatActivity() {
         val binding = ActivitySecondaryBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val intent = intent
-        viewModel = ShoppingListItemViewModel(application)
+        viewModel = NewViewModel(application)
         database = FirebaseDatabase.getInstance().getReference("ShoppingListItem")
         val adapter = MyAdapter(viewModel)
 
         viewModel.allItems.observe(this, Observer {
             it.let {
-                adapter.setListOfShoppingListItems(it)
+                val list : MutableList<ShoppingListItemFirebaseDto> = mutableListOf()
+                val children = it!!.children
+                for (it in children) {
+                    list.add(it.getValue(ShoppingListItemFirebaseDto::class.java)!!)
+                }
+                adapter.setListOfShoppingListItems(list)
             }
         })
 
@@ -57,7 +62,7 @@ class SecondaryActivity : AppCompatActivity() {
     private fun setUpAdapter(adapter: MyAdapter) {
         val context = this
         val onClickListener = object : MyAdapter.OnClickListener {
-            override fun onItemClick(item: ShoppingListItem?) {
+            override fun onItemClick(item: ShoppingListItemFirebaseDto?) {
                 var intent = Intent(context, EditShoppingListItem::class.java)
                 intent.putExtra("gotToEditText_id", item!!.id)
                 intent.putExtra("gotToEditText_name", item.name)
@@ -72,7 +77,7 @@ class SecondaryActivity : AppCompatActivity() {
     }
 
     private fun setUpDeleteOnSwipe(
-        viewModel: ShoppingListItemViewModel,
+        viewModel: NewViewModel,
         adapter: MyAdapter,
         binding: ActivitySecondaryBinding
     ) {
@@ -99,29 +104,20 @@ class SecondaryActivity : AppCompatActivity() {
 
     private fun setUpSaveButton(
         binding: ActivitySecondaryBinding,
-        viewModel: ShoppingListItemViewModel
+        viewModel: NewViewModel
     ) {
         binding.button2.setOnClickListener {
             if (binding.etName.text.isEmpty() || binding.etPrice.text.isEmpty() || binding.etQuantity.text.isEmpty()) {
                 Toast.makeText(this, "Fill all fields first", Toast.LENGTH_SHORT).show()
             } else {
-                var item = ShoppingListItem(
+                var item = ShoppingListItemFirebaseDto(
+                    id = "null",
                     name = binding.etName.text.toString(),
                     quantity = binding.etQuantity.text.toString().toFloat(),
-                    price = binding.etPrice.text.toString().toFloat()
+                    price = binding.etPrice.text.toString().toFloat(),
+                    bought = false
                 )
-                var id = viewModel.addShoppingItem(item)
-                var idFirebase = database.push().key
-                if (idFirebase != null) {
-                    var fDto = ShoppingListItemFirebaseDto(
-                        idFirebase,
-                        id,
-                        binding.etName.text.toString(),
-                        binding.etQuantity.text.toString().toFloat(),
-                        binding.etPrice.text.toString().toFloat()
-                    )
-                    database.child(idFirebase).setValue(fDto)
-                }
+                viewModel.addShoppingItem(item)
                 binding.etName.setText("")
                 binding.etPrice.setText("")
                 binding.etQuantity.setText("")
@@ -142,13 +138,15 @@ class SecondaryActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if(requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            var id = data!!.getLongExtra("gotToEditText_id", 0)
-            var name = data!!.getCharSequenceExtra("gotToEditText_name").toString()
-            var price = data!!.getFloatExtra("gotToEditText_price", 0.0f)
-            var quantity = data!!.getFloatExtra("gotToEditText_quantity", 0.0f)
-            var bought = data!!.getBooleanExtra("gotToEditText_bought", false)
-            var shoppingListItem = ShoppingListItem(id, name,  quantity, price, bought)
-            viewModel.updateShoppingListItem(shoppingListItem)
+            if(data != null) {
+                var id = data.getStringExtra("gotToEditText_id").orEmpty()
+                var name = data.getCharSequenceExtra("gotToEditText_name").toString()
+                var price = data.getFloatExtra("gotToEditText_price", 0.0f)
+                var quantity = data.getFloatExtra("gotToEditText_quantity", 0.0f)
+                var bought = data.getBooleanExtra("gotToEditText_bought", false)
+                var shoppingListItem = ShoppingListItemFirebaseDto(id, name, quantity, price, bought)
+                viewModel.updateShoppingListItem(shoppingListItem)
+            }
 
         }
     }

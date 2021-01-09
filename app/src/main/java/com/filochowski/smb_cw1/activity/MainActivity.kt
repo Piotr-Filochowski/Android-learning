@@ -7,13 +7,9 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.filochowski.smb_cw1.R
 import com.filochowski.smb_cw1.databinding.ActivityMainBinding
-import com.filochowski.smb_cw1.entity.ShoppingListItem
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 
 class MainActivity : AppCompatActivity() {
 

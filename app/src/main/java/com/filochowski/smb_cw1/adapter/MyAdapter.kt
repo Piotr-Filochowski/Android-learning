@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.filochowski.smb_cw1.databinding.ListElementBinding
-import com.filochowski.smb_cw1.entity.ShoppingListItem
-import com.filochowski.smb_cw1.viewmodel.ShoppingListItemViewModel
+import com.filochowski.smb_cw1.dto.ShoppingListItemFirebaseDto
+import com.filochowski.smb_cw1.viewmodel.NewViewModel
 
-class MyAdapter(val viewModel: ShoppingListItemViewModel) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class MyAdapter(val viewModel: NewViewModel) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
-    var sliList =  emptyList<ShoppingListItem>()
+    var sliList =  emptyList<ShoppingListItemFirebaseDto>()
     var listener: OnClickListener? = null
     class MyViewHolder(val binding: ListElementBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -24,7 +24,7 @@ class MyAdapter(val viewModel: ShoppingListItemViewModel) : RecyclerView.Adapter
         holder.binding.tvName.text = sliList[position].name
         holder.binding.tvQuantity.text = sliList[position].quantity.toString()
         holder.binding.tvPrice.text = sliList[position].price.toString()
-        holder.binding.cbAbsolwent.isChecked = sliList[position].bought
+        holder.binding.cbAbsolwent.isChecked = sliList[position].bought!!
         holder.binding.root.setOnClickListener {
 
             if(listener != null && position != RecyclerView.NO_POSITION) {
@@ -38,19 +38,19 @@ class MyAdapter(val viewModel: ShoppingListItemViewModel) : RecyclerView.Adapter
         }
     }
 
-    fun getShoppingListItemAt(position: Int): ShoppingListItem {
+    fun getShoppingListItemAt(position: Int): ShoppingListItemFirebaseDto {
         return sliList[position]
     }
 
     override fun getItemCount(): Int = sliList.size
 
-    fun setListOfShoppingListItems(list: List<ShoppingListItem>) {
+    fun setListOfShoppingListItems(list: List<ShoppingListItemFirebaseDto>) {
         sliList = list
         notifyDataSetChanged()
     }
 
     interface OnClickListener {
-        fun onItemClick(item: ShoppingListItem?)
+        fun onItemClick(item: ShoppingListItemFirebaseDto?)
     }
 
     fun setOnItemClickListener(clickListener: OnClickListener) {

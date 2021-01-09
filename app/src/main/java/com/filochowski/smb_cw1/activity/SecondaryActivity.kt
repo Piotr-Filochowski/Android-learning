@@ -1,7 +1,6 @@
 package com.filochowski.smb_cw1.activity
 
 import android.app.Activity
-import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.filochowski.smb_cw1.R
 import com.filochowski.smb_cw1.adapter.MyAdapter
 import com.filochowski.smb_cw1.databinding.ActivitySecondaryBinding
 import com.filochowski.smb_cw1.dto.ShoppingListItemFirebaseDto
@@ -24,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase
 
 class SecondaryActivity : AppCompatActivity() {
 
-    private lateinit var viewModelGlobal: ShoppingListItemViewModel
+    private lateinit var viewModel: ShoppingListItemViewModel
     private lateinit var database: DatabaseReference
 
 
@@ -33,12 +31,9 @@ class SecondaryActivity : AppCompatActivity() {
         val binding = ActivitySecondaryBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val intent = intent
-        val viewModel = ShoppingListItemViewModel(application)
-        viewModelGlobal = viewModel
+        viewModel = ShoppingListItemViewModel(application)
         database = FirebaseDatabase.getInstance().getReference("ShoppingListItem")
         val adapter = MyAdapter(viewModel)
-
-
 
         viewModel.allItems.observe(this, Observer {
             it.let {
@@ -153,7 +148,7 @@ class SecondaryActivity : AppCompatActivity() {
             var quantity = data!!.getFloatExtra("gotToEditText_quantity", 0.0f)
             var bought = data!!.getBooleanExtra("gotToEditText_bought", false)
             var shoppingListItem = ShoppingListItem(id, name,  quantity, price, bought)
-            viewModelGlobal.updateShoppingListItem(shoppingListItem)
+            viewModel.updateShoppingListItem(shoppingListItem)
 
         }
     }

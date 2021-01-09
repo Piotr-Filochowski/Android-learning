@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.filochowski.smb_cw1.R
 import com.filochowski.smb_cw1.databinding.ActivityMainBinding
 import com.filochowski.smb_cw1.entity.ShoppingListItem
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,12 +23,23 @@ class MainActivity : AppCompatActivity() {
     private var isColorOn: Boolean = false
     private var isBigSize: Boolean = false
 
+    private lateinit var auth: FirebaseAuth
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         sharedPreferences = getPreferences(Context.MODE_PRIVATE)
         setContentView(binding.root)
-        binding.tVLogged.text = "Logged as: " + intent.getStringExtra("user")
+        auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
+
+        if (currentUser != null) {
+            binding.tVLogged.text = "Logged as: " + currentUser.email
+        } else {
+            binding.tVLogged.text = "Logged as: ?"
+        }
+
         binding.buttonOptions.setOnClickListener {
             val intentOptions = Intent(this, OptionsActivity::class.java)
             intentOptions.putExtra("opt_color", isColorOn)

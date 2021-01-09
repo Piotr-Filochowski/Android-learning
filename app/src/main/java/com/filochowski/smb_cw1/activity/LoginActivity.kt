@@ -1,19 +1,24 @@
 package com.filochowski.smb_cw1.activity
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.filochowski.smb_cw1.R
+import com.filochowski.smb_cw1.dto.User
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val auth = FirebaseAuth.getInstance()
+        auth = FirebaseAuth.getInstance()
 
         loginButton.setOnClickListener {
             auth.signInWithEmailAndPassword(
@@ -23,12 +28,18 @@ class LoginActivity : AppCompatActivity() {
                 .addOnCompleteListener {
                     if(it.isSuccessful) {
                         Toast.makeText(this, "Successfull login", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this, MainActivity::class.java).also {
-                            it.putExtra("user", auth.currentUser?.email)
-                        })
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.putExtra("user", auth.currentUser)
+                        val currentUser = auth.currentUser
+                        startActivity(intent)
 
                     } else {
-                        Toast.makeText(this, "Login error", Toast.LENGTH_SHORT).show()
+                        var message: String? = it.exception?.message
+                        if(message != null) {
+                            Toast.makeText(this, "Login error $message", Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(this, "Login unknown error", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
 

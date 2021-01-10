@@ -7,13 +7,14 @@ import com.filochowski.smb_cw1.dto.ShoppingListItemFirebaseDto
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
-class FirebaseCommonItemsViewModel(application: Application) : AndroidViewModel(application), FirebaseViewModel {
+class FirebaseCommonItemsViewModel(application: Application) : AndroidViewModel(application),
+    FirebaseViewModel {
 
     val allItems: FirebaseQueryLiveData
     private val database: DatabaseReference
 
     init {
-        database = FirebaseDatabase.getInstance().getReference("/public")
+        database = FirebaseDatabase.getInstance().getReference("/common")
         allItems = FirebaseQueryLiveData(database)
     }
 

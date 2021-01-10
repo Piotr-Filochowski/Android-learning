@@ -7,13 +7,14 @@ import com.filochowski.smb_cw1.dto.ShoppingListItemFirebaseDto
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
-class FirebaseUserPersonalItemsViewModel(application: Application, uid: String) : AndroidViewModel(application), FirebaseViewModel {
+class FirebaseUserPersonalItemsViewModel(application: Application, uid: String) :
+    AndroidViewModel(application), FirebaseViewModel {
 
     val allItems: FirebaseQueryLiveData
     private val database: DatabaseReference
 
     init {
-        database = FirebaseDatabase.getInstance().getReference("/users/$uid")
+        database = FirebaseDatabase.getInstance().getReference("/private/$uid")
         allItems = FirebaseQueryLiveData(database)
     }
 
@@ -23,10 +24,6 @@ class FirebaseUserPersonalItemsViewModel(application: Application, uid: String) 
             return allItems
         }
 
-//    companion object {
-//        private val SHOPPING_LIST_ITEM_REF =
-//            FirebaseDatabase.getInstance().getReference("/ShoppingListItem")
-//    }
 
     override fun getShoppingItems(): FirebaseQueryLiveData {
         return allItems

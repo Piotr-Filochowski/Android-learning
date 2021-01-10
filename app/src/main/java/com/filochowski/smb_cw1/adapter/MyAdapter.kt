@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.filochowski.smb_cw1.databinding.ListElementBinding
 import com.filochowski.smb_cw1.dto.ShoppingListItemFirebaseDto
-import com.filochowski.smb_cw1.viewmodel.NewViewModel
+import com.filochowski.smb_cw1.viewmodel.FirebaseUserPersonalItemsViewModel
+import com.filochowski.smb_cw1.viewmodel.FirebaseViewModel
 
-class MyAdapter(val viewModel: NewViewModel) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class MyAdapter(val viewModel: FirebaseViewModel) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
     var sliList =  emptyList<ShoppingListItemFirebaseDto>()
     var listener: OnClickListener? = null

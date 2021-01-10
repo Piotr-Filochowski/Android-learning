@@ -7,7 +7,7 @@ import com.filochowski.smb_cw1.dto.ShoppingListItemFirebaseDto
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
-class NewViewModel(application: Application, uid: String) : AndroidViewModel(application) {
+class FirebaseUserPersonalItemsViewModel(application: Application, uid: String) : AndroidViewModel(application), FirebaseViewModel {
 
     val allItems: FirebaseQueryLiveData
     private val database: DatabaseReference
@@ -28,11 +28,11 @@ class NewViewModel(application: Application, uid: String) : AndroidViewModel(app
 //            FirebaseDatabase.getInstance().getReference("/ShoppingListItem")
 //    }
 
-    fun getShoppingItems(): FirebaseQueryLiveData {
+    override fun getShoppingItems(): FirebaseQueryLiveData {
         return allItems
     }
 
-    fun addShoppingItem(item: ShoppingListItemFirebaseDto) {
+    override fun addShoppingItem(item: ShoppingListItemFirebaseDto) {
         var idFirebase = database.push().key
         if (idFirebase != null) {
             item.id = idFirebase
@@ -40,15 +40,11 @@ class NewViewModel(application: Application, uid: String) : AndroidViewModel(app
         }
     }
 
-    fun updateShoppingListItem(item: ShoppingListItemFirebaseDto) {
+    override fun updateShoppingListItem(item: ShoppingListItemFirebaseDto) {
         database.child(item.id!!).setValue(item)
     }
 
-    fun deleteShoppingListItem(item: ShoppingListItemFirebaseDto) {
+    override fun deleteShoppingListItem(item: ShoppingListItemFirebaseDto) {
         database.child(item.id!!).removeValue();
-    }
-
-    fun removeAll() {
-        // maybe not
     }
 }

@@ -45,4 +45,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/buttonCommonList"
+        android:layout_width="141dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="133dp"
+        android:layout_marginTop="17dp"
+        android:text="Common list"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonNext" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

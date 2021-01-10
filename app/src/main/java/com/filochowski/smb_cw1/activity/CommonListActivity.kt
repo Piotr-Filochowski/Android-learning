@@ -14,13 +14,13 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.filochowski.smb_cw1.adapter.MyAdapter
 import com.filochowski.smb_cw1.databinding.ActivitySecondaryBinding
 import com.filochowski.smb_cw1.dto.ShoppingListItemFirebaseDto
-import com.filochowski.smb_cw1.viewmodel.FirebaseUserPersonalItemsViewModel
+import com.filochowski.smb_cw1.viewmodel.FirebaseCommonItemsViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 
-class SecondaryActivity : AppCompatActivity() {
+class CommonListActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: FirebaseUserPersonalItemsViewModel
+    private lateinit var viewModel: FirebaseCommonItemsViewModel
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +30,7 @@ class SecondaryActivity : AppCompatActivity() {
         val intent = intent
         auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
-        viewModel = FirebaseUserPersonalItemsViewModel(application, currentUser!!.uid)
+        viewModel = FirebaseCommonItemsViewModel(application)
         val adapter = MyAdapter(viewModel)
 
         viewModel.allItems.observe(this, Observer {
@@ -75,7 +75,7 @@ class SecondaryActivity : AppCompatActivity() {
     }
 
     private fun setUpDeleteOnSwipe(
-        viewModel: FirebaseUserPersonalItemsViewModel,
+        viewModel: FirebaseCommonItemsViewModel,
         adapter: MyAdapter,
         binding: ActivitySecondaryBinding
     ) {
@@ -102,7 +102,7 @@ class SecondaryActivity : AppCompatActivity() {
 
     private fun setUpSaveButton(
         binding: ActivitySecondaryBinding,
-        viewModel: FirebaseUserPersonalItemsViewModel
+        viewModel: FirebaseCommonItemsViewModel
     ) {
         binding.button2.setOnClickListener {
             if (binding.etName.text.isEmpty() || binding.etPrice.text.isEmpty() || binding.etQuantity.text.isEmpty()) {

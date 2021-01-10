@@ -47,6 +47,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent1)
         }
 
+        binding.buttonCommonList.setOnClickListener {
+            val intent1 = Intent(this, CommonListActivity::class.java)
+            startActivity(intent1)
+        }
+
     }
 
     override fun onStart() {

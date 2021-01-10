@@ -15,7 +15,7 @@ import com.filochowski.smb_cw1.adapter.MyAdapter
 import com.filochowski.smb_cw1.databinding.ActivitySecondaryBinding
 import com.filochowski.smb_cw1.dto.ShoppingListItemFirebaseDto
 import com.filochowski.smb_cw1.viewmodel.NewViewModel
-import com.filochowski.smb_cw1.viewmodel.ShoppingListItemViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
@@ -23,16 +23,16 @@ import com.google.firebase.database.FirebaseDatabase
 class SecondaryActivity : AppCompatActivity() {
 
     private lateinit var viewModel: NewViewModel
-    private lateinit var database: DatabaseReference
-
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivitySecondaryBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val intent = intent
-        viewModel = NewViewModel(application)
-        database = FirebaseDatabase.getInstance().getReference("ShoppingListItem")
+        auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
+        viewModel = NewViewModel(application, currentUser!!.uid)
         val adapter = MyAdapter(viewModel)
 
         viewModel.allItems.observe(this, Observer {

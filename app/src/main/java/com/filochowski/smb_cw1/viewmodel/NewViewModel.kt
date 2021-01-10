@@ -7,14 +7,14 @@ import com.filochowski.smb_cw1.dto.ShoppingListItemFirebaseDto
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
-class NewViewModel(application: Application) : AndroidViewModel(application) {
+class NewViewModel(application: Application, uid: String) : AndroidViewModel(application) {
 
     val allItems: FirebaseQueryLiveData
     private val database: DatabaseReference
 
     init {
-        allItems = FirebaseQueryLiveData(SHOPPING_LIST_ITEM_REF)
-        database = FirebaseDatabase.getInstance().getReference("ShoppingListItem")
+        database = FirebaseDatabase.getInstance().getReference("/users/$uid")
+        allItems = FirebaseQueryLiveData(database)
     }
 
 
@@ -23,10 +23,10 @@ class NewViewModel(application: Application) : AndroidViewModel(application) {
             return allItems
         }
 
-    companion object {
-        private val SHOPPING_LIST_ITEM_REF =
-            FirebaseDatabase.getInstance().getReference("/ShoppingListItem")
-    }
+//    companion object {
+//        private val SHOPPING_LIST_ITEM_REF =
+//            FirebaseDatabase.getInstance().getReference("/ShoppingListItem")
+//    }
 
     fun getShoppingItems(): FirebaseQueryLiveData {
         return allItems
